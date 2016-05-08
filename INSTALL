@@ -1,0 +1,4 @@
+to buils the application type in lumeter/ directory
+	qmake-qt4
+	make
+

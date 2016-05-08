@@ -1,0 +1,8 @@
+05/17/2009
+	added svn :)
+	fixed mainwidget so it cannot be accidentally hidden from desktop by removing all child widgets
+
+05/18/2009
+	fixed compilation on Qt < 4.5
+	fixed order of appearing widgets
+
