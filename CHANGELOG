@@ -1,3 +1,6 @@
+05/09/2016
+	moved to github
+
 05/17/2009
 	added svn :)
 	fixed mainwidget so it cannot be accidentally hidden from desktop by removing all child widgets
