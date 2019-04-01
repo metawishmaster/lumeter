@@ -56,6 +56,7 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h,
 		while(ii.hasNext()) {
 			ii.next();
 			checkBox = new QCheckBox(ii.key());
+			checkBox->setObjectName(ii.key());
 			l->addWidget(checkBox);
 			if((QWidget*)(ii.value())->isVisible())
 				checkBox->setCheckState(Qt::Checked);
@@ -113,22 +114,29 @@ void PreferencesDiag::okClicked()
 			checkBox = qobject_cast<QCheckBox*>(l->itemAt(nn)->widget());
 			if(checkBox == NULL) continue;
 
-			if(!widgets->operator[](ip).contains(checkBox->text())) continue;
+			if(!widgets->operator[](ip).contains(checkBox->objectName())) {
+				printf("%s contains %s\n", ip.toStdString().c_str(), checkBox->objectName().toStdString().c_str());
+				continue;
+			}
 			QMapIterator<QString, QWidget*> ii(widgets->operator[](ip));
 			while(ii.hasNext()) {
 				ii.next();
-				if(ii.key() != checkBox->text()) continue;
+				if(ii.key() != checkBox->objectName()) {
+					continue;
+				}
 				w = ii.value();
 
-				if(checkBox->checkState() == Qt::Checked)
+				if(checkBox->checkState() == Qt::Checked) {
 					w->show();
-				else
+				} else {
 					w->hide();
+				}
+				printf("%s: %s <-> %s\n", ip.toStdString().c_str(), ii.key().toStdString().c_str(), checkBox->objectName().toStdString().c_str());
 			}
 		}
 	}
 
 	horizontal = ((QCheckBox *)layout2->takeAt(0)->widget())->checkState() == Qt::Checked;
-	close();
+	hide();
 }
 

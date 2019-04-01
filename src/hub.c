@@ -223,7 +223,7 @@ int main(int argc, char* argv[])
 
 #define MAX_BACKLOG_QUEUE 20  // number of connections that can queue (ignored by OS I think?)
 	
-  struct protoent *ptrp;
+//  struct protoent *ptrp;
 
   char buff[1500];
   char i_heartbeat_msg[1500];
@@ -270,7 +270,7 @@ int i_optval, i_optlen;
   
   xaphub_init();
 
-  ptrp = getprotobyname("udp");  
+//  ptrp = getprotobyname("udp");  
 
  // Header verbage
  printf("xAP Hub Network Connector for xAP v1.2\n");
@@ -336,7 +336,7 @@ if (argc<3) {
 	// we are to use. If none passed on command line, default to
 	// eth0.
 
-	memset((char*)&i_interface, sizeof(i_interface),0);
+	memset((char*)&i_interface, 0, sizeof(i_interface));
 
 	i_interface.ifr_addr.sa_family = AF_INET; 
 	strcpy(i_interface.ifr_name,i_interfacename);
@@ -401,7 +401,7 @@ if (argc<3) {
 	// we are to use. If none passed on command line, default to
 	// eth0.
 
-	memset((char*)&i_interface, sizeof(i_interface),0);
+	memset((char*)&i_interface, 0, sizeof(i_interface));
 
 	i_interface.ifr_addr.sa_family = AF_INET; 
 	strcpy(i_interface.ifr_name,i_interfacename);

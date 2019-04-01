@@ -92,7 +92,7 @@ int xap_discover_broadcast_network(int* a_sender_sockfd, struct sockaddr_in* a_s
 	// we are to use. If none passed on command line, default to
 	// eth0.
 
-	memset((char*)&i_interface, sizeof(i_interface),0);
+	memset((char*)&i_interface, 0, sizeof(i_interface));
 
 	i_interface.ifr_addr.sa_family = AF_INET; 
 	strcpy(i_interface.ifr_name,g_interfacename);

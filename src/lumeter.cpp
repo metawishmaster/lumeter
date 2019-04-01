@@ -20,6 +20,7 @@
  */
 #include <QApplication>
 #include <QSplashScreen>
+#include <QProxyStyle>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -103,7 +104,7 @@ int main(int _argc, char *_argv[])
 	QPixmap tux(":/tux.png");
 	QSplashScreen splash(tux);
 	splash.show();
-
+	
 	QSettings settings;
 	settings.beginGroup("network");
 	if (!settings.contains("lsn_if")) {

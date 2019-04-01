@@ -50,7 +50,7 @@ BaseWidget::~BaseWidget()
 	xap->deleteInstance();
 }
 
-BaseWidget::BaseWidget(NetStat* _stat, LXAPThread* xap_) : netstat(_stat), xap(xap_), time_interval(1000)
+BaseWidget::BaseWidget(NetStat* _stat, LXAPThread* xap_) : netstat(_stat), xap(xap_), time_interval(1000), diag(nullptr)
 {
 	settings.beginGroup("Layout");
 	hLayout = settings.value("horizontal", true).toBool();
@@ -95,6 +95,8 @@ BaseWidget::BaseWidget(NetStat* _stat, LXAPThread* xap_) : netstat(_stat), xap(x
 	m_menu.addAction(about_action);
 	m_menu.addAction(aboutQt_action);
 	m_menu.addAction(exit_action);
+	
+	diag = new PreferencesDiag(this, hLayout, &widgets);
 }
 
 void BaseWidget::closeEvent(QCloseEvent *event)
@@ -206,7 +208,7 @@ void BaseWidget::showPrefDiag()
 	diag = new PreferencesDiag(this, hLayout, &widgets);
 	diag->exec();
 	h = diag->getState();
-	diag->close();
+	diag->hide();
 	delete diag;
 	if(h != hLayout) {
 		if(h) tmp = new QHBoxLayout(0);

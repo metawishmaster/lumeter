@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
 	long pos = 0;
 	struct ifreq interface;
 
-	memset(&interface, sizeof(interface), 0);
+	memset(&interface, 0, sizeof(interface));
 	interface.ifr_addr.sa_family = AF_INET;
 	if(argc > 1)
 		strcpy(interface.ifr_name, argv[1]);
