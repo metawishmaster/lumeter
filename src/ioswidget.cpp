@@ -56,9 +56,11 @@ IOSWidget::IOSWidget(BaseWidget* _parent, const QString& name)
 
 	setObjectName(name);
 	QLabel *inLabel = new QLabel("0");
+	inLabel->setMargin(2);
 	connect(this, SIGNAL(updateInSpeed(QString)), inLabel, SLOT(setText(QString)));
 
 	QLabel *outLabel = new QLabel("0");
+	outLabel->setMargin(2);
 	connect(this, SIGNAL(updateOutSpeed(QString)), outLabel, SLOT(setText(QString)));
 
 	QHBoxLayout* ioLayout = new QHBoxLayout;
@@ -73,7 +75,7 @@ IOSWidget::IOSWidget(BaseWidget* _parent, const QString& name)
 	ioLayout->setSpacing(0);
 	ioLayout->setMargin(0);
 	setLayout(ioLayout);
-	setFixedSize(sizeHint());
+//	setFixedSize(sizeHint());
 }
 
 void IOSWidget::contextMenuEvent(QContextMenuEvent *event)
