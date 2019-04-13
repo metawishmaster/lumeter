@@ -3,7 +3,7 @@ project(lumeter)
 
 find_package(Qt5Widgets)
 
-set(UIS lumeter.qrc)
+set(RESOURCES lumeter.qrc)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -16,6 +16,9 @@ if (UNIX)
 endif()
 include_directories(.)
 add_definitions(-DLUMETER_GUI=1)
+QT5_ADD_RESOURCES( RES_SOURCES ${RESOURCES} )
+#QT5_WRAP_UI( UI_HEADERS ${UIS} )
+QT5_WRAP_CPP( MOC_SRCS ${MOC_HEADERS} )
 add_executable(lumeter src/basewidget.cpp
            src/hub.c
            src/ioswidget.cpp
@@ -27,6 +30,7 @@ add_executable(lumeter src/basewidget.cpp
            src/xapinit.c
            src/xapsend.c
            src/xaprx.c
-           src/xaptx.c)
+           src/xaptx.c
+	   ${MOC_SRCS} ${RES_SOURCES} ${UI_HEADERS})
 target_link_libraries (lumeter Qt5::Widgets)
 #set_target_properties(lumeter PROPERTIES LINK_SEARCH_END_STATIC 1)
