@@ -34,6 +34,7 @@
 #include "basewidget.h"
 #include "lxapthread.h"
 #include "netstat.h"
+#include "xaphub.h"
 
 typedef void (*sidhandler_t)(int);
 
@@ -45,6 +46,7 @@ const char* XAP_ME = "lumeter2-gui";
 extern "C" int hub_main(int argc, char *argv[]);
 extern "C" int srv_main(int argc, char *argv[]);
 
+/*
 int hpid, spid;
 
 void killchilds()
@@ -90,7 +92,7 @@ void handler(int n)
 	wait(&status);
 	if(errno) perror("while waiting killed");
 }
-
+*/
 int main(int _argc, char *_argv[])
 {
 	QApplication app(_argc, _argv);
@@ -98,13 +100,15 @@ int main(int _argc, char *_argv[])
 	int ret, argc = _argc;
 	char** argv;
 
-	QCoreApplication::setOrganizationName("MWM Soft");
+	QCoreApplication::setOrganizationName("MW Soft");
 	QCoreApplication::setApplicationName("lumeter");
 
 	QPixmap tux(":/tux.png");
 	QSplashScreen splash(tux);
 	splash.show();
-	
+	xAPHubThread *xaphub = new xAPHubThread(_argc, _argv);
+	xAPSrvThread *xapsrv = new xAPSrvThread(_argc, _argv);
+
 	QSettings settings;
 	settings.beginGroup("network");
 	if (!settings.contains("lsn_if")) {
@@ -136,6 +140,19 @@ int main(int _argc, char *_argv[])
 	app.processEvents();
 	settings.endGroup();
 
+	splash.showMessage("<font size=16 color=green>Starting lumeter...</font>");
+	app.processEvents();
+	xaphub->start();
+	sleep(1);
+/*
+	splash.showMessage("<font size=16 color=green>Starting lumeter client...</font>");
+	app.processEvents();
+	xapsrv->start();
+	sleep(1);
+	printf("started\n");
+*/
+	xapsrv->start();
+#if 0
 	hpid = fork();
 	if(hpid == 0) {
 		daemonize();
@@ -155,10 +172,9 @@ int main(int _argc, char *_argv[])
 		exit(0);
 	}
 	sleep(1);
+#endif
 
-	splash.showMessage("<font size=16 color=green>Starting lumeter client...</font>");
-	app.processEvents();
-	atexit(killchilds);
+//	atexit(killchilds);
 
 	NetStat* netstat = new NetStat;
 	LXAPThread* xap = LXAPThread::getInstance(argc, argv, netstat);
@@ -169,16 +185,17 @@ int main(int _argc, char *_argv[])
 
 //	for(int i = 1; i < 65; i++)
 //	signal(SIGTERM, &handler);
-	signal(SIGINT, &handler);
+//	signal(SIGINT, &handler);
 
 	splash.finish(widget);
-
 	ret = app.exec();
 	if (_argc == -1) {
 		for (_argc = 0; _argc < argc; _argc++)
 			free(argv[_argc]);
 		free(argv);
 	}
+	//xaphub->exit();
+
 	return ret;
 }
 

@@ -267,9 +267,8 @@ int i_optval, i_optlen;
   fd_set i_rdfs;
   struct timeval i_tv;
   int i_retval;
-  
-  xaphub_init();
 
+  xaphub_init();
 //  ptrp = getprotobyname("udp");  
 
  // Header verbage
@@ -301,7 +300,6 @@ if (argc<3) {
  {
 	 g_debuglevel=atoi(argv[3]);
  }
-
 //#################################################################################
 
 
@@ -473,7 +471,7 @@ if (argc<3) {
   printf("Ready\n");
 
   while (1==1) 
-  { 
+  {
 		i_timenow=time((time_t*)0);
 
 	

@@ -1,5 +1,6 @@
 #include "xapdef.h"
 
+#include <libgen.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +33,7 @@ int xap_parse_commandline(int argc, char* argv[], int base)
 		strcpy(g_instance, XAP_DEFAULT_INSTANCE); // default instance name
 	} else 
 	{
-		strncpy(g_instance, argv[base], sizeof(g_instance)-1);
+		strncpy(g_instance, basename(argv[base]), sizeof(g_instance)-1);
 	}
 
 	if (argc<2+base) {
