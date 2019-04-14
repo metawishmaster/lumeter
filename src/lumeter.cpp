@@ -96,6 +96,8 @@ void handler(int n)
 int main(int _argc, char *_argv[])
 {
 	QApplication app(_argc, _argv);
+	xAPHubThread *xaphub;
+	xAPSrvThread *xapsrv;
 
 	int ret, argc = _argc;
 	char** argv;
@@ -106,8 +108,6 @@ int main(int _argc, char *_argv[])
 	QPixmap tux(":/tux.png");
 	QSplashScreen splash(tux);
 	splash.show();
-	xAPHubThread *xaphub = new xAPHubThread(_argc, _argv);
-	xAPSrvThread *xapsrv = new xAPSrvThread(_argc, _argv);
 
 	QSettings settings;
 	settings.beginGroup("network");
@@ -139,6 +139,9 @@ int main(int _argc, char *_argv[])
 	}
 	app.processEvents();
 	settings.endGroup();
+
+	xaphub = new xAPHubThread(argc, argv);
+	xapsrv = new xAPSrvThread(argc, argv);
 
 	splash.showMessage("<font size=16 color=green>Starting lumeter...</font>");
 	app.processEvents();
