@@ -274,7 +274,7 @@ void BaseWidget::setHideActOn(QWidget *widget)
 
 void BaseWidget::about()
 {
-	QMessageBox::about(this, "About lumeter-2.3-pre1", "(C) Sergej Bauer 2019 Moscow, Russian Federation\nmailto:sergej.bauer@gmail.com");
+	QMessageBox::about(this, "About lumeter-2.3", "(C) Sergej Bauer 2019 Moscow, Russian Federation\nmailto:sergej.bauer@gmail.com");
 }
 
 void BaseWidget::contextMenuEvent(QContextMenuEvent *event)
