@@ -1,4 +1,4 @@
-PLATFORMS += armhf
+#PLATFORMS += armhf
 # CC for miss compilation
 # add 'PLATFORMS += mips' as well
 CXX = 

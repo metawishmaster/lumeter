@@ -129,7 +129,7 @@ int main(int _argc, char *_argv[])
 			argv = (char**)malloc(3 * sizeof(char*));
 			argv[0] = strdup(_argv[0]);
 			argv[1] = strdup(settings.value("lsn_if", "eth0").toString().toStdString().c_str());
-			argv[2] = '\0';
+			argv[2] = NULL;
 			argc++;
 			_argc = -1;
 		} else {
