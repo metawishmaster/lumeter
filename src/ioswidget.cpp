@@ -32,11 +32,23 @@
 
 #include "ioswidget.h"
 
+void IOSWidget::showInBits(bool f)
+{
+//	qDebug() << "SHOW IN BITS =" << f;
+	showBits = f;
+}
+
 void IOSWidget::checkSpeed(const QPair<long, long>& pair)
 {
 	QString in, out;
-	in.setNum(pair.first);
-	out.setNum(pair.second);
+	
+	if (showBits) {
+		in.setNum(pair.first << 3);
+		out.setNum(pair.second << 3);
+	} else {
+		in.setNum(pair.first);
+		out.setNum(pair.second);
+	}
 
 	int l = in.length();
 	while(l-- > 3)
@@ -75,6 +87,7 @@ IOSWidget::IOSWidget(BaseWidget* _parent, const QString& name)
 	ioLayout->setSpacing(0);
 	ioLayout->setMargin(0);
 	setLayout(ioLayout);
+	showBits = qobject_cast<BaseWidget *>(parent)->bits;
 //	setFixedSize(sizeHint());
 }
 

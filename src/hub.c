@@ -329,6 +329,10 @@ if (argc<3) {
 		printf("Cannot set reuseaddr options on broadcast socket\n");
 		return 0;
 	}
+	if (setsockopt(server_sockfd, SOL_SOCKET, SO_REUSEPORT, (char*)&i_optval, i_optlen)) {
+		printf("Cannot set reuseaddr options on broadcast socket\n");
+		return 0;
+	}
 
 	// Query the low-level capabilities of the network interface
 	// we are to use. If none passed on command line, default to

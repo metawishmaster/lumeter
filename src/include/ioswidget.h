@@ -32,11 +32,13 @@ class IOSWidget : public QWidget
 	public:
 		IOSWidget(BaseWidget*, const QString&);
 	public slots:
+		void showInBits(bool);
 		void checkSpeed(const QPair<long, long>& pair);
 	signals:
 		void updateInSpeed(QString);
 		void updateOutSpeed(QString);
 	private:
+		bool showBits;
 		QString if_name;
 		BaseWidget *parent;
 		void contextMenuEvent(QContextMenuEvent *event);

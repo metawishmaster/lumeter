@@ -24,8 +24,9 @@
 #include "preferences.h"
 #include "basewidget.h"
 
-PreferencesDiag::PreferencesDiag(QWidget *parent, bool h,
-		QMap<QString, QMap<QString, QWidget*> > *lMap) : QDialog(parent), horizontal(h), widgets(lMap)
+PreferencesDiag::PreferencesDiag(QWidget *parent, bool h, bool bits,
+		QMap<QString, QMap<QString, QWidget*> > *lMap) : QDialog(parent),
+		horizontal(h), showInBits(bits), widgets(lMap)
 {
 	QCheckBox *checkBox;
 	QMapIterator<QString, QMap<QString, QWidget*> > i(*widgets);
@@ -33,6 +34,7 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h,
 
 	setWindowTitle(tr("Preferences (items & layout)"));
 	groupBox2 = new QGroupBox(tr("Alignment"));
+	groupBox3 = new QGroupBox(tr("Show"));
 	okBtn = new QPushButton("Ok");
 	cancelBtn = new QPushButton("Cancel");
 
@@ -41,6 +43,7 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h,
 
 	layout = new QVBoxLayout;
 	layout2 = new QVBoxLayout;
+	layout3 = new QVBoxLayout;
 	grLayout = new QHBoxLayout;
 	main_layout = new QVBoxLayout;
 	btns_layout = new QHBoxLayout;
@@ -75,14 +78,36 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h,
 
 	layout2->setSpacing(1);
 	groupBox2->setLayout(layout2);
-	grLayout->addWidget(groupBox2);
+	QVBoxLayout *xxLayout = new QVBoxLayout();
+	grLayout->addLayout(xxLayout);
+	xxLayout->addWidget(groupBox2);
 
+	radio = new QRadioButton("Bits");
+	radio->setChecked(qobject_cast<BaseWidget *>(parent)->bits);
+	//connect(radio, &QRadioButton::clicked, [=](bool) { qobject_cast<BaseWidget *>(parent)->bits = 1; });
+	connect(radio, SIGNAL(toggled(bool)), this, SLOT(showInBitsSlot(bool)));
+	layout3->addWidget(radio);
+	radio = new QRadioButton("Bytes");
+	radio->setChecked(!qobject_cast<BaseWidget *>(parent)->bits);
+	//connect(radio, &QRadioButton::clicked, [=](bool) { qobject_cast<BaseWidget *>(parent)->bits = 0; });
+	layout3->addWidget(radio);
+
+	layout3->setSpacing(1);
+	groupBox3->setLayout(layout3);
+	xxLayout->addWidget(groupBox3);
+	
 	btns_layout->addWidget(okBtn);
 	btns_layout->addWidget(cancelBtn);
 	btns_layout->addStretch();
 	main_layout->addLayout(grLayout);
 	main_layout->addLayout(btns_layout);
 	setLayout(main_layout);
+}
+
+void PreferencesDiag::showInBitsSlot(bool b)
+{
+	qDebug() << "showInBitsSlot:" << b;
+	showInBits = b;
 }
 
 void PreferencesDiag::invert()
@@ -131,11 +156,13 @@ void PreferencesDiag::okClicked()
 				} else {
 					w->hide();
 				}
+				connect(this, SIGNAL(showInBitsSignal(bool)), qobject_cast<IOSWidget*>(w), SLOT(showInBits(bool)));
 				printf("%s: %s <-> %s\n", ip.toStdString().c_str(), ii.key().toStdString().c_str(), checkBox->objectName().toStdString().c_str());
 			}
 		}
 	}
 
+	emit showInBitsSignal(showInBits);
 	horizontal = ((QCheckBox *)layout2->takeAt(0)->widget())->checkState() == Qt::Checked;
 	hide();
 }

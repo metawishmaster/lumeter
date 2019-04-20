@@ -44,16 +44,18 @@ BaseWidget::~BaseWidget()
 	settings.beginGroup("Layout");
 	settings.setValue("horizontal", hLayout);
 	settings.setValue("pos", pos());
+	settings.setValue("show_in_bits", bits);
 	settings.endGroup();
 	xap->exit(0);
 	xap->wait();
 	xap->deleteInstance();
 }
 
-BaseWidget::BaseWidget(NetStat* _stat, LXAPThread* xap_) : netstat(_stat), xap(xap_), time_interval(1000), diag(nullptr)
+BaseWidget::BaseWidget(NetStat* _stat, LXAPThread* xap_) : netstat(_stat), xap(xap_), time_interval(1000), bits(false), diag(nullptr)
 {
 	settings.beginGroup("Layout");
 	hLayout = settings.value("horizontal", true).toBool();
+	bits = settings.value("show_in_bits", false).toBool();
 	QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
 	settings.endGroup();
 
@@ -96,7 +98,7 @@ BaseWidget::BaseWidget(NetStat* _stat, LXAPThread* xap_) : netstat(_stat), xap(x
 	m_menu.addAction(aboutQt_action);
 	m_menu.addAction(exit_action);
 	
-	diag = new PreferencesDiag(this, hLayout, &widgets);
+//	diag = new PreferencesDiag(this, hLayout, &widgets);
 }
 
 void BaseWidget::closeEvent(QCloseEvent *event)
@@ -173,6 +175,8 @@ void BaseWidget::checkSpeed()
 			const QString& if_name(it.key());
 			if(!widgets.contains(ip) || !widgets[ip].contains((const QString)if_name)) {
 				IOSWidget *newWidget  = new IOSWidget(this, if_name + " on " + ip);
+//				connect(this, SIGNAL(showInBitsSignal(bool)), newWidget, SLOT(showInBits(bool)));
+				newWidget->showInBits(this->bits);
 				widgets[ip][if_name] = newWidget;
 				qDebug() << if_name << "on" << ip;
 				layouts[ip]->addWidget(newWidget);
@@ -199,13 +203,20 @@ void BaseWidget::checkSpeed()
 	setUpdatesEnabled(true);
 }
 
+void BaseWidget::showInBits(bool b)
+{
+	this->bits = b;
+//	emit PreferencesDiag::showInBitsSignal(b);
+}
+
 void BaseWidget::showPrefDiag()
 {
 	bool h;
 	QLayout* l;
 	QLayout *tmp;
 
-	diag = new PreferencesDiag(this, hLayout, &widgets);
+	diag = new PreferencesDiag(this, hLayout, this->bits, &widgets);
+	connect(diag, SIGNAL(showInBitsSignal(bool)), this, SLOT(showInBits(bool)));
 	diag->exec();
 	h = diag->getState();
 	diag->hide();

@@ -34,23 +34,32 @@ class PreferencesDiag : public QDialog
 	Q_OBJECT
 
 	public:
-		PreferencesDiag(QWidget*, bool, QMap< QString, QMap<QString, QWidget*> > *);
+		PreferencesDiag(QWidget*, bool, bool, QMap< QString, QMap<QString, QWidget*> > *);
 		bool getState() { return horizontal; }
+
 	private:
 		QPushButton *okBtn;
 		QPushButton *cancelBtn;
 
 		QGroupBox *groupBox;
 		QGroupBox *groupBox2;
+		QGroupBox *groupBox3;
 		QVBoxLayout *layout;
 		QVBoxLayout *layout2;
+		QVBoxLayout *layout3;
 		QHBoxLayout *grLayout;
 		QVBoxLayout *main_layout;
 		QHBoxLayout *btns_layout;
 
+		bool showInBits;
 		bool horizontal;
 		QMap<QString, QMap<QString, QWidget*> > *widgets;
+
+	signals:
+		void showInBitsSignal(bool);
+
 	private slots:
+		void showInBitsSlot(bool);
 		void invert();
 		void okClicked();
 };

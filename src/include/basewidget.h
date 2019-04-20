@@ -49,6 +49,7 @@ public:
 		QSettings settings;
 		void setHideActOn(QWidget*);
 		QMenu* menu();
+		bool bits;
 
 private:
 		NetStat* netstat;
@@ -76,6 +77,7 @@ public slots:
 		void checkSpeed();
 		void showPrefDiag();
 		void about();
+		void showInBits(bool);
 
 signals:
 		void updateSpeed(QPair<long, long>&);
