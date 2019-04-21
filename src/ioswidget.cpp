@@ -36,6 +36,11 @@ void IOSWidget::showInBits(bool f)
 {
 //	qDebug() << "SHOW IN BITS =" << f;
 	showBits = f;
+	if (showBits)
+		this->setToolTip("Bits per second");
+	else
+		this->setToolTip("Bytes per second");
+
 }
 
 void IOSWidget::checkSpeed(const QPair<long, long>& pair)
