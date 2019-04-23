@@ -197,7 +197,8 @@ int main(int _argc, char *_argv[])
 			free(argv[_argc]);
 		free(argv);
 	}
-	//xaphub->exit();
+	xaphub->exit();
+	xapsrv->exit();
 
 	return ret;
 }

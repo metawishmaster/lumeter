@@ -71,6 +71,7 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h, bool bits,
 
 	QRadioButton *radio = new QRadioButton("Horizontal");
 	radio->setChecked(h);
+	radio->setObjectName("horizontalRadioButton");
 	layout2->addWidget(radio);
 	radio = new QRadioButton("Vertical");
 	radio->setChecked(!h);
@@ -128,6 +129,13 @@ void PreferencesDiag::okClicked()
 	QLayout* l;
 	QWidget* w;
 
+	for (n = 0; n < layout2->count(); n++) {
+		if (layout2->itemAt(n)->widget()->objectName() == "horizontalRadioButton") {
+			horizontal = (((QCheckBox *)layout2->itemAt(n)->widget())->checkState() == Qt::Checked);
+			break;
+		}
+	}
+
 	for(n = 0; n < grLayout->count(); ++n) {
 		g = qobject_cast<QGroupBox*>(grLayout->itemAt(n)->widget());
 		if(g == NULL) continue;
@@ -163,7 +171,7 @@ void PreferencesDiag::okClicked()
 	}
 
 	emit showInBitsSignal(showInBits);
-	horizontal = ((QCheckBox *)layout2->takeAt(0)->widget())->checkState() == Qt::Checked;
+
 	hide();
 }
 
