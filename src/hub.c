@@ -382,7 +382,7 @@ if (argc<3) {
 	server_address.sin_port=htons(i_interfaceport);
 		
 	if (bind(server_sockfd, (struct sockaddr*)&server_address, sizeof(server_address))!=0) {
-		printf("Broadcast socket port %d in use \n",i_interfaceport);
+		printf("%s:%d: Broadcast socket port %d in use \n", __FILE__, __LINE__, i_interfaceport);
 		exit(-1);
 	}
 
