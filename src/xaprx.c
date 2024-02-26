@@ -1,4 +1,4 @@
-#include "xapdef.h"
+#include "xapdef_ext.h"
 
 #include <string.h>
 #include <ctype.h>

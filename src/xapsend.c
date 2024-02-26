@@ -20,7 +20,7 @@
  *
  */
 
-#include "xapdef.h"
+#include "xapdef_ext.h"
 
 #include <stdio.h>
 #include <unistd.h>

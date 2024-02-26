@@ -22,7 +22,7 @@
 #include "netstat.h"
 
 extern "C" {
-#include "xapdef.h"
+#include "xapdef_ext.h"
 }
 #include <QtCore>
 

@@ -1,4 +1,4 @@
-#include "xapdef.h"
+#include "xapdef_ext.h"
 
 int xap_send_tick(int a_interval) {
 

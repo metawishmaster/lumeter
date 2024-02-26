@@ -47,9 +47,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "xapdef.h"
+#include "xapdef_ext.h"
 
-char g_uid[9];
+//char g_uid[9];
 
 #define XAP_MAX_HUB_ENTRIES	50
 
