@@ -1,4 +1,4 @@
-
+#ifndef __XAPDEF_EXT_H__
 #ifdef WIN32
 #include <termios.h>
 #include <stdio.h>
@@ -133,4 +133,4 @@ extern int xap_parse_commandline(int argc, char* argv[], int base);
 extern int xap_discover_broadcast_network(int* a_sender_sockfd, struct sockaddr_in* a_sender_address);
 extern int xap_discover_hub_address(int* a_receiver_sockfd, struct sockaddr_in* a_receiver_address, int a_port_range_low, int a_port_range_high);
 extern int xap_init(int argc, char* argv[], int base);
-
+#endif

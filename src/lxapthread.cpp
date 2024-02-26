@@ -24,7 +24,6 @@
 extern "C" {
 #include "xapdef.h"
 }
-
 #include <QtCore>
 
 LXAPThread* LXAPThread::instance = NULL;
