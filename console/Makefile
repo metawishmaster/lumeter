@@ -35,7 +35,7 @@ armhf:
 build:	$(TARGETS)
 
 $(BINDIR)/%.o: ../src/%.c
-	$(CC) $(CFLAGS) -c -o $(BINDIR)/$*.o $< 
+	$(CC) -I../src/include/ $(CFLAGS) -c -o $(BINDIR)/$*.o $<
 
 $(SERVER_EXEC):	$(SERVER_OBJS)
 	$(CC) -o $(BINDIR)/$(SERVER_EXEC) $(SERVER_OBJS) $(LDLIBS)
