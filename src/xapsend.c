@@ -184,8 +184,9 @@ int main(int argc, char* argv[])
 
 	s = fgets(s, 1400, f);
 	s = fgets(s, 1400, f);
-	pos = ftell(f);
+	pos = ftell(f) + 1;
 
+	printf("pos = %d\n", pos);
 	while(1) {
 		xap_heartbeat_tick(HBEAT_INTERVAL);
 		gather(f, s);
