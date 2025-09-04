@@ -1,2 +1,1 @@
-- move build system to CMake
-- add some GUI stuff
+add timeout setting in `Preferences` dialog box
