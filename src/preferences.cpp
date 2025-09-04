@@ -129,17 +129,10 @@ void PreferencesDiag::okClicked()
 	QGroupBox* g;
 	QLayout* l;
 	QWidget* w;
-#if LAYOUT_DBG
+
 	for (n = 0; n < layout2->count(); n++) {
-		printf("%s\n", layout2->itemAt(n)->widget()->objectName().toStdString().c_str());
-	}
-#endif
-	for (n = 0; n < layout2->count(); n++) {
-		if (layout2->itemAt(n)->widget()->objectName() == "horizontalRadioButton") {
+		if (layout2->itemAt(n)->widget()->objectName() == QLatin1String("horizontalRadioButton")) {
 			horizontal = (((QCheckBox *)layout2->itemAt(n)->widget())->checkState() == Qt::Checked);
-#if LAYOUT_DBG
-			printf("horizontal = %d\n", horizontal);
-#endif
 			break;
 		}
 	}
