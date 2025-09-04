@@ -1,1 +1,2 @@
-add timeout setting in `Preferences` dialog box
+- add timeout setting in `Preferences` dialog box
+- propagate across set of interfaces
