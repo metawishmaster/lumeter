@@ -77,7 +77,7 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h, bool bits,
 	layout2->addWidget(radio);
 	radio = new QRadioButton("Vertical");
 	radio->setChecked(!h);
-	radio->setObjectName("verticalalRadioButton");
+	radio->setObjectName("verticalRadioButton");
 	layout2->addWidget(radio);
 
 	layout2->setSpacing(1);
@@ -133,15 +133,24 @@ void PreferencesDiag::okClicked()
 	QWidget* w;
 
 	for (n = 0; n < layout2->count(); n++) {
-		if (layout2->itemAt(n)->widget()->objectName() == "horizontalRadioButton") {
-//			horizontal = ((qobject_cast<QCheckBox*>(layout2->itemAt(n)->widget()))->checkState() == Qt::Checked);
-			QCheckBox *checkBox = qobject_cast<QCheckBox*>(layout2->itemAt(n)->widget());
-			if (checkBox) {
-				horizontal = (checkBox->checkState() == Qt::Checked);
+		QWidget* widget = layout2->itemAt(n)->widget();
+		if (!widget) continue;
+
+		if (widget->objectName() == "horizontalRadioButton") {
+			QRadioButton* radioButton = qobject_cast<QRadioButton*>(widget);
+			if (radioButton && radioButton->isChecked()) {
+				horizontal = 1;
+				break;
 			}
-			break;
+		} else if (widget->objectName() == "verticalRadioButton") {
+			QRadioButton* radioButton = qobject_cast<QRadioButton*>(widget);
+			if (radioButton && radioButton->isChecked()) {
+				horizontal = 0;
+				break;
+			}
 		}
 	}
+	printf("--- horizontal == %d\n", horizontal);
 
 	for(n = 0; n < grLayout->count(); ++n) {
 		g = qobject_cast<QGroupBox*>(grLayout->itemAt(n)->widget());
