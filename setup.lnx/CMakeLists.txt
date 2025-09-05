@@ -1,0 +1,30 @@
+PROJECT (lumeter-setup-lnx)
+
+SET(SRC ${CMAKE_CURRENT_SOURCE_DIR})
+SET(BLD ${CMAKE_CURRENT_BINARY_DIR})
+SET(SETUP_STAMP ${BLD}/setup.stamp)
+SET(RSRC ${CMAKE_SOURCE_DIR})
+SET(RBLD ${CMAKE_BINARY_DIR})
+
+SET(PSRC ${SRC}/..)
+SET(PBLD ${BLD}/..)
+if (COMMON_RUNTIME_OUTPUT_DIRECTORY)
+	SET(PBLD "${COMMON_RUNTIME_OUTPUT_DIRECTORY}")
+endif ()
+
+if (SERVER_SIDE)
+	SET(ARCH "armhf")
+else (SERVER_SIDE)
+	SET(ARCH "amd64")
+endif (SERVER_SIDE)
+
+ADD_CUSTOM_COMMAND (OUTPUT ${SETUP_STAMP}
+	COMMAND ${SRC}/mkdeb.sh ${PSRC} ${PBLD} ${lumeter_VERSION} ${ARCH} ${RBLD}
+	DEPENDS lumeter ${SRC}/mkdeb.sh ${RSRC}/version
+)
+
+ADD_CUSTOM_TARGET(lumeter-setup-lnx ALL
+	DEPENDS ${SETUP_STAMP}
+)
+
+MESSAGE(STATUS "Added dpkg setup target lumeter ${lumeter_VERSION}.")

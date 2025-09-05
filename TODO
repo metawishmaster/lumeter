@@ -1,2 +1,3 @@
 - add timeout setting in `Preferences` dialog box
+- investigate rare freezes at start
 - propagate across set of interfaces

@@ -1,0 +1,13 @@
+Source: es8336-avs-firmware
+Section: unknown
+Priority: optional
+Maintainer: unknown <maintainer@buildhost>
+Build-Depends: debhelper (>= 11)
+Standards-Version: 4.1.3
+Homepage: <insert the upstream URL, if relevant>
+
+Package: es8336-avs-firmware
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ES8336/AVS firmware
+ <insert long description, indented with spaces>

@@ -51,4 +51,13 @@ add_executable(lumeter ${lumeter_INC}
 			${MOC_SRCS} ${RES_SOURCES} ${UI_HEADERS}
 	)
 target_link_libraries (lumeter Qt5::Widgets)
-#set_target_properties(lumeter PROPERTIES LINK_SEARCH_END_STATIC 1)
+
+add_subdirectory(setup.lnx)
+
+file(READ version VERSION_VALUE)
+string(STRIP "${VERSION_VALUE}" VERSION_VALUE)
+message("readed version is $VERSION_VALUE")
+
+add_definitions(-DLUMETER_VERSION=\"${VERSION_VALUE}\")
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} APPEND PROPERTY
+    CMAKE_CONFIGURE_DEPENDS version tux.png)

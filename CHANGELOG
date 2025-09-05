@@ -1,7 +1,8 @@
-
 09/05/2025
 	fix for fixed procfs
-	fixed long standing bug with twisted layouts
+	fix long standing bug with twisted layouts
+	add handy control of version numbers
+	add debianize scripts
 
 05/09/2016
 	moved to github

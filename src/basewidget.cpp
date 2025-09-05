@@ -285,13 +285,14 @@ void BaseWidget::setHideActOn(QWidget *widget)
 
 void BaseWidget::about()
 {
+	QString aboutCaption = QString("About lumeter-%1").arg(LUMETER_VERSION);
 	QString aboutText = QString(
 			"<p>© Sergej Bauer 2019 Moscow, Russian Federatio</p>"
 			"<p>mailto:sergej.bauer@gmail.com</p>"
-			"<p>Version: 3.0.0</p>"
-			"<p>Built on: %1 at %2</p>"
-    ).arg(__DATE__).arg(__TIME__);
-	QMessageBox::about(this, "About lumeter-2.4", aboutText);
+			"<p>Version: %1</p>"
+			"<p>Built on: %2 at %3</p>"
+    ).arg(LUMETER_VERSION).arg(__DATE__).arg(__TIME__);
+	QMessageBox::about(this, aboutCaption, aboutText);
 }
 
 void BaseWidget::contextMenuEvent(QContextMenuEvent *event)
