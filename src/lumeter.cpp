@@ -46,53 +46,6 @@ const char* XAP_ME = "lumeter2-gui";
 extern "C" int hub_main(int argc, char *argv[]);
 extern "C" int srv_main(int argc, char *argv[]);
 
-/*
-int hpid, spid;
-
-void killchilds()
-{
-	int status;
-	int ret;
-
-	errno = 0;
-	ret = kill(hpid, SIGTERM);
-	if(errno) perror("kill HUB process");
-	ret = kill(spid, SIGTERM);
-	if(errno) perror("kill server process");
-	wait(&status);
-	if(errno) perror("waiy killed");
-}
-
-void daemonize(void)
-{
-	pid_t sid;
-
-	if(getppid() == 1) return;
-
-	umask(0);
-
-	sid = setsid();
-	if(sid < 0) exit(-1);
-
-	if((chdir("/")) < 0) exit(-1);
-}
-
-void handler(int n)
-{
-	int status, ret = n;
-
-	fprintf(stderr, "handeler\n");
-	errno = 0;
-	ret = kill(hpid, SIGTERM);
-	if(errno) perror("kill HUB process");
-	ret = kill(spid, SIGTERM);
-	if(errno) perror("kill server process");
-	ret = kill(getpid(), SIGTERM);
-	if(errno) perror("kill this process");
-	wait(&status);
-	if(errno) perror("while waiting killed");
-}
-*/
 int main(int _argc, char *_argv[])
 {
 	QApplication app(_argc, _argv);
@@ -147,37 +100,8 @@ int main(int _argc, char *_argv[])
 	app.processEvents();
 	xaphub->start();
 	sleep(1);
-/*
-	splash.showMessage("<font size=16 color=green>Starting lumeter client...</font>");
-	app.processEvents();
-	xapsrv->start();
-	sleep(1);
-	printf("started\n");
-*/
-	xapsrv->start();
-#if 0
-	hpid = fork();
-	if(hpid == 0) {
-		daemonize();
-		hub_main(argc, argv);
-		sleep(1);
-		kill(getppid(), SIGINT);
-		exit(0);
-	}
-	sleep(1);
 
-	splash.showMessage("<font size=16 color=green>Starting lumeter server...</font>");
-	app.processEvents();
-	spid = fork();
-	if(spid == 0) {
-		daemonize();
-		srv_main(argc, argv);
-		exit(0);
-	}
-	sleep(1);
-#endif
-
-//	atexit(killchilds);
+	xapsrv->start();
 
 	NetStat* netstat = new NetStat;
 	LXAPThread* xap = LXAPThread::getInstance(argc, argv, netstat);
@@ -185,10 +109,6 @@ int main(int _argc, char *_argv[])
 
 	BaseWidget* widget = new BaseWidget(netstat, xap);
 	widget->show();
-
-//	for(int i = 1; i < 65; i++)
-//	signal(SIGTERM, &handler);
-//	signal(SIGINT, &handler);
 
 	splash.finish(widget);
 	ret = app.exec();

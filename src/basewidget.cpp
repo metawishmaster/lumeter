@@ -98,8 +98,6 @@ BaseWidget::BaseWidget(NetStat* _stat, LXAPThread* xap_) : netstat(_stat), xap(x
 	m_menu.addAction(about_action);
 	m_menu.addAction(aboutQt_action);
 	m_menu.addAction(exit_action);
-	
-//	diag = new PreferencesDiag(this, hLayout, &widgets);
 }
 
 void BaseWidget::closeEvent(QCloseEvent *event)
@@ -119,7 +117,6 @@ void BaseWidget::lopOff(const QString& ip)
 	layouts.remove(ip);
 	widgets.remove(ip);
 	netstat->remove(ip);
-//	delete layouts[ip];
 }
 
 void BaseWidget::addIpLayout(const QString& ip)
@@ -164,8 +161,7 @@ void BaseWidget::checkSpeed()
 				qDebug() << "DEL" << ip;
 				lopOff(ip);
 				continue;
-			}// else
-			//	widgets[ip]->setEnabled(false);
+			}
 		}
 		if(!layouts.contains(ip))
 			addIpLayout(ip);
@@ -176,7 +172,6 @@ void BaseWidget::checkSpeed()
 			const QString& if_name(it.key());
 			if(!widgets.contains(ip) || !widgets[ip].contains((const QString)if_name)) {
 				IOSWidget *newWidget  = new IOSWidget(this, if_name + " on " + ip);
-//				connect(this, SIGNAL(showInBitsSignal(bool)), newWidget, SLOT(showInBits(bool)));
 				newWidget->showInBits(this->bits);
 				widgets[ip][if_name] = newWidget;
 				qDebug() << if_name << "on" << ip;
@@ -207,7 +202,6 @@ void BaseWidget::checkSpeed()
 void BaseWidget::showInBits(bool b)
 {
 	this->bits = b;
-//	emit PreferencesDiag::showInBitsSignal(b);
 }
 
 void BaseWidget::showPrefDiag()
@@ -270,7 +264,6 @@ void BaseWidget::showPrefDiag()
 			settings.setValue(ii.key(), !((QWidget*)(ii.value()))->isHidden());
 		}
 		settings.endGroup();
-//		widgets[i.key()].clear();
 	}
 }
 

@@ -34,7 +34,6 @@
 
 void IOSWidget::showInBits(bool f)
 {
-//	qDebug() << "SHOW IN BITS =" << f;
 	showBits = f;
 	if (showBits)
 		this->setToolTip("Bits per second");
@@ -46,7 +45,7 @@ void IOSWidget::showInBits(bool f)
 void IOSWidget::checkSpeed(const QPair<long, long>& pair)
 {
 	QString in, out;
-	
+
 	if (showBits) {
 		in.setNum(pair.first << 3);
 		out.setNum(pair.second << 3);
@@ -93,7 +92,6 @@ IOSWidget::IOSWidget(BaseWidget* _parent, const QString& name)
 	ioLayout->setMargin(0);
 	setLayout(ioLayout);
 	showBits = qobject_cast<BaseWidget *>(parent)->bits;
-//	setFixedSize(sizeHint());
 }
 
 void IOSWidget::contextMenuEvent(QContextMenuEvent *event)

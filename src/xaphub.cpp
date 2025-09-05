@@ -9,10 +9,6 @@ xAPHubThread::xAPHubThread(int _argc, char *_argv[]) :
 									argv(_argv),
 									QThread()
 {
-#if 0
-	if (!argc || !argv)
-		throw new QException();
-#endif
 }
 
 void xAPHubThread::run()
@@ -26,10 +22,6 @@ xAPSrvThread::xAPSrvThread(int _argc, char *_argv[]) :
 									argv(_argv),
 									QThread()
 {
-#if 0
-	if (!argc || !argv)
-		throw new QException();
-#endif
 }
 
 void xAPSrvThread::run()

@@ -88,18 +88,16 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h, bool bits,
 
 	radio = new QRadioButton("Bits");
 	radio->setChecked(qobject_cast<BaseWidget *>(parent)->bits);
-	//connect(radio, &QRadioButton::clicked, [=](bool) { qobject_cast<BaseWidget *>(parent)->bits = 1; });
 	connect(radio, SIGNAL(toggled(bool)), this, SLOT(showInBitsSlot(bool)));
 	layout3->addWidget(radio);
 	radio = new QRadioButton("Bytes");
 	radio->setChecked(!qobject_cast<BaseWidget *>(parent)->bits);
-	//connect(radio, &QRadioButton::clicked, [=](bool) { qobject_cast<BaseWidget *>(parent)->bits = 0; });
 	layout3->addWidget(radio);
 
 	layout3->setSpacing(1);
 	groupBox3->setLayout(layout3);
 	xxLayout->addWidget(groupBox3);
-	
+
 	btns_layout->addWidget(okBtn);
 	btns_layout->addWidget(cancelBtn);
 	btns_layout->addStretch();
