@@ -60,12 +60,13 @@ BaseWidget::BaseWidget(NetStat* _stat, LXAPThread* xap_) : netstat(_stat), xap(x
 	settings.endGroup();
 
 	move(pos);
-	if(hLayout) layout = new QHBoxLayout;
-	else layout = new QVBoxLayout;
+	if(hLayout) layout = new QHBoxLayout();
+	else layout = new QVBoxLayout();
 
 	setMaximumSize(QSize(20, 40));
 
-	layout->setMargin(0);
+	layout->setContentsMargins(0, 0, 0, 0); // вместо setMargin(0)
+	layout->setSpacing(0);
 	layout->setSpacing(0);
 	setLayout(layout);
 
@@ -218,8 +219,9 @@ void BaseWidget::showPrefDiag()
 	diag = new PreferencesDiag(this, hLayout, this->bits, &widgets);
 	connect(diag, SIGNAL(showInBitsSignal(bool)), this, SLOT(showInBits(bool)));
 	diag->exec();
-	h = diag->getState();
 	diag->hide();
+	h = (diag->getState() == 1);
+	printf("HORIZONTAL = %d\n", h);
 	delete diag;
 	if(h != hLayout) {
 		if(h) tmp = new QHBoxLayout(0);

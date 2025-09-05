@@ -41,12 +41,12 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h, bool bits,
 	connect(cancelBtn, SIGNAL(clicked()), this, SLOT(close()));
 	connect(okBtn, SIGNAL(clicked()), this, SLOT(okClicked()));
 
-	layout = new QVBoxLayout;
-	layout2 = new QVBoxLayout;
-	layout3 = new QVBoxLayout;
-	grLayout = new QHBoxLayout;
-	main_layout = new QVBoxLayout;
-	btns_layout = new QHBoxLayout;
+	layout = new QVBoxLayout();
+	layout2 = new QVBoxLayout();
+	layout3 = new QVBoxLayout();
+	grLayout = new QHBoxLayout();
+	main_layout = new QVBoxLayout();
+	btns_layout = new QHBoxLayout();
 
 	while(i.hasNext()) {
 		i.next();
