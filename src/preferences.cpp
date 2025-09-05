@@ -1,4 +1,4 @@
-/*
+/*:
  * lumeter - simple tool for watching statistics from local/non-local network interfaces
  *
  * Copyright (c) 2009 Bauer Sergej <sergej.bauer@gmail.com>
@@ -63,6 +63,8 @@ PreferencesDiag::PreferencesDiag(QWidget *parent, bool h, bool bits,
 			l->addWidget(checkBox);
 			if((QWidget*)(ii.value())->isVisible())
 				checkBox->setCheckState(Qt::Checked);
+			else
+				checkBox->setCheckState(Qt::Unchecked);
 		}
 		l->addStretch();
 		groupBox->setLayout(l);
@@ -131,8 +133,12 @@ void PreferencesDiag::okClicked()
 	QWidget* w;
 
 	for (n = 0; n < layout2->count(); n++) {
-		if (layout2->itemAt(n)->widget()->objectName() == QLatin1String("horizontalRadioButton")) {
-			horizontal = (((QCheckBox *)layout2->itemAt(n)->widget())->checkState() == Qt::Checked);
+		if (layout2->itemAt(n)->widget()->objectName() == "horizontalRadioButton") {
+//			horizontal = ((qobject_cast<QCheckBox*>(layout2->itemAt(n)->widget()))->checkState() == Qt::Checked);
+			QCheckBox *checkBox = qobject_cast<QCheckBox*>(layout2->itemAt(n)->widget());
+			if (checkBox) {
+				horizontal = (checkBox->checkState() == Qt::Checked);
+			}
 			break;
 		}
 	}
