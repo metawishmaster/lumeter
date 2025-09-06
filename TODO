@@ -2,3 +2,4 @@
 - investigate rare freezes at start
 - propagate across set of interfaces
 - console version (for embedded systems, etc)
+- add cmake script to console version
