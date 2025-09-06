@@ -22,8 +22,7 @@
 #include "netstat.h"
 
 #if QT_VERSION >= 0x040500
-const QRegExp IOStat::rx("(\\w+)\\n\\{(?:\\n)in=\\d+(?:\\n)out=\\d+(?:\\n)ispeed=(\\d+)(?:\\n)ospeed=(\\d+)\\n\\}\\n");
-#else
-QRegExp IOStat::rx("(\\w+)\\n\\{(?:\\n)in=\\d+(?:\\n)out=\\d+(?:\\n)ispeed=(\\d+)(?:\\n)ospeed=(\\d+)\\n\\}\\n");
+const
 #endif
+QRegExp       IOStat::rx("(\\w+)\\n\\{(?:\\n)in=\\d+(?:\\n)out=\\d+(?:\\n)ispeed=(\\d+)(?:\\n)ospeed=(\\d+)\\n\\}\\n");
 
