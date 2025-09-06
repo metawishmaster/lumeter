@@ -26,7 +26,7 @@
 
 class LXAPThread : public QThread
 {
-	LXAPThread(const LXAPThread&) : QThread(0)  { endReq = false; }
+	LXAPThread(const LXAPThread&) : QThread(0)  { stat = NULL; endReq = false; }
 	LXAPThread& operator=(const LXAPThread&) { return *this; }
 
 	static LXAPThread* instance;
