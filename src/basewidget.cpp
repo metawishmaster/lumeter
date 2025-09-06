@@ -282,7 +282,7 @@ void BaseWidget::about()
 {
 	QString aboutCaption = QString("About lumeter-%1").arg(LUMETER_VERSION);
 	QString aboutText = QString(
-			"<p>© Sergej Bauer 2019 Moscow, Russian Federatio</p>"
+			"<p>© Sergej Bauer 2019 Moscow, Russian Federation</p>"
 			"<p>mailto:sergej.bauer@gmail.com</p>"
 			"<p>Version: %1</p>"
 			"<p>Built on: %2 at %3</p>"
