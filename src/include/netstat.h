@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
+
 #ifndef _NETSTAT_
 #define _NETSTAT_
 
@@ -32,7 +33,7 @@
 
 class IOStat
 {
-	QMap < QString, QPair<long, long> > map;
+	QMap<QString, QPair<long, long>> map;
 #if QT_VERSION >= 0x040500
 	static const QRegExp rx;
 #else
@@ -41,63 +42,73 @@ class IOStat
 public:
 	QReadWriteLock *lock;
 	QTime time_stamp;
-	IOStat()
+
+	IOStat() : lock(new QReadWriteLock)
 	{
-		lock = new QReadWriteLock;
 	}
 
 	~IOStat()
 	{
-		lock->unlock();
 		delete lock;
 	}
 
-	IOStat(const IOStat& c)
+	IOStat(const IOStat& other) : lock(new QReadWriteLock), map(other.map), time_stamp(other.time_stamp)
 	{
-		this->lock = new QReadWriteLock;
-		QWriteLocker locker(lock);
-		this->map = c.map;
 	}
 
-	const QPair<long, long> operator [] (QString& s) const
+	IOStat& operator=(const IOStat& other)
+	{
+		if (this != &other) {
+			QWriteLocker locker(lock);
+			QWriteLocker otherLocker(other.lock);
+			map = other.map;
+			time_stamp = other.time_stamp;
+		}
+		return *this;
+	}
+
+	const QPair<long, long> operator[](const QString& s) const
 	{
 		QReadLocker locker(lock);
-		return map[s];
+		return map.value(s);
 	}
 
-	void operator << (char* s)
+	void operator<<(const char* s)
 	{
 		QWriteLocker locker(lock);
 		const QString str(s);
 		int pos = 0;
 		time_stamp = QTime::currentTime();
-//qDebug() << map.keys();
 		map.clear();
-		while(rx.indexIn(str, pos) != -1) {
+
+		while (rx.indexIn(str, pos) != -1) {
 			if (rx.captureCount() == 3) {
 				map[rx.cap(1)] = qMakePair(rx.cap(2).toLong(), rx.cap(3).toLong());
 				pos += rx.matchedLength();
+			} else {
+				break;
 			}
 		}
 	}
 
-	const QMap < QString, QPair<long, long> > getMap() const
+	QMap<QString, QPair<long, long>> getMap() const
 	{
+		QReadLocker locker(lock);
 		return map;
 	}
 
-	const QMap< QString, QPair<long, long> >::const_iterator const_begin() const
+	QMap<QString, QPair<long, long>>::const_iterator const_begin() const
 	{
+		QReadLocker locker(lock);
 		return map.constBegin();
 	}
 
-	const QMap< QString, QPair<long, long> >::const_iterator const_end() const
+	QMap<QString, QPair<long, long>>::const_iterator const_end() const
 	{
+		QReadLocker locker(lock);
 		return map.constEnd();
 	}
 };
 
 typedef QMap<QString, IOStat> NetStat;
-
 #endif
-
