@@ -117,7 +117,7 @@ void gather(FILE* f, char* buf)
 		else
 		{
 			ispeed = 0;
-			ospeed = 0;	
+			ospeed = 0;
 		}
 		len = strlen(tmp);
 		snprintf(tmp + len, 1400 - len, "%s\n{\nin=%llu\nout=%llu\nispeed=%llu\nospeed=%llu\n}\n", iname, ibytes, obytes, ispeed, ospeed);
@@ -148,7 +148,7 @@ int srv_main(int argc, char* argv[])
 int main(int argc, char* argv[])
 #endif
 {
-	char *s, buf[1500];
+	char *s, buf[1500], null[1400];
 	int fd;
 	FILE* f;
 	long pos = 0;
@@ -178,22 +178,27 @@ int main(int argc, char* argv[])
 		s = buf + strlen(buf);
 	}
 
-	fd = open("/proc/net/dev", O_ASYNC | O_NONBLOCK);
-	fcntl(fd, F_SETFL, O_ASYNC);
-	f = fdopen(fd, "r");
-
-	s = fgets(s, 1400, f);
-	s = fgets(s, 1400, f);
-	pos = ftell(f) + 1;
-
-	printf("pos = %d\n", pos);
 	while(1) {
+		f = fopen("/proc/net/dev", "r");
+		if (!f) {
+			perror("Error opening /proc/net/dev");
+			sleep(1);
+			continue;
+		}
+
+		for (int i = 0; i < 2; i++) {
+				if (!fgets(null, sizeof(null), f)) {
+				break;
+			}
+		}
+
 		xap_heartbeat_tick(HBEAT_INTERVAL);
 		gather(f, s);
-
 		xap_send_message(buf);
+
+		fclose(f);
+
 		sleep(1);
-		fseek(f, pos, SEEK_SET);
 	}
 
 	scache_free(&statistic);
