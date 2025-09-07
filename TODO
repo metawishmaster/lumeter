@@ -3,3 +3,4 @@
 - propagate across set of interfaces
 - console version (for embedded systems, etc)
 - add cmake script to console version
+- column with the configurable set of broadcasting interfaces
